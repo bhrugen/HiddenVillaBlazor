@@ -17,14 +17,32 @@ Price: @Room.Price
 <input type="checkbox" @bind-value="Room.IsActive" checked="@(Room.IsActive?"checked":null)" /> &nbsp; Is Active
 <br />
 <span>This room is @(Room.IsActive?"Active":"Inactive")</span>
+<br />
+
+<select @bind="SelectedRoomProp">
+    @foreach (var prop in Room.RoomProps)
+    {
+        <option value="@prop.Name">@prop.Name</option>
+    }
+</select>
+<span>The Room Prop selected is : @SelectedRoomProp</span>
 
 @code{
+
+    string SelectedRoomProp = "";
+
     Model.BlazorRoom Room = new Model.BlazorRoom()
     {
         Id = 1,
         RoomName = "Villa Suite",
         IsActive = true,
-        Price = 499
+        Price = 499,
+        RoomProps = new List<Model.BlazorRoomProp>
+{
+            new Model.BlazorRoomProp{Id=1,Name="Sq Ft",Value="100"},
+            new Model.BlazorRoomProp{Id=2,Name="Occupancy",Value="3"},
+
+        }
     };
 
 }

@@ -5,29 +5,58 @@
     Welcome to your new app.
 
     <SurveyPrompt Title="How is Blazor working for you?" />*@
-<h2 class="bg-light border p-2">
-    First Room
-</h2>
-Room: @Room.RoomName
-<br />
-Price: @Room.Price
-<br />
+<div class="bg-light border p-2">
+    <h2 class="bg-light border p-2">
+        First Room
+    </h2>
+    Room: @Room.RoomName
+    <br />
+    Price: @Room.Price
+    <br />
 
-<input type="number" @bind-value="Room.Price" @bind-value:event="oninput" />
-<br />
-<input type="checkbox" @bind-value="Room.IsActive" checked="@(Room.IsActive?"checked":null)" /> &nbsp; Is Active
-<br />
-<span>This room is @(Room.IsActive?"Active":"Inactive")</span>
-<br />
+    <input type="number" @bind-value="Room.Price" @bind-value:event="oninput" />
+    <br />
+    <input type="checkbox" @bind-value="Room.IsActive" checked="@(Room.IsActive?"checked":null)" /> &nbsp; Is Active
+    <br />
+    <span>This room is @(Room.IsActive?"Active":"Inactive")</span>
+    <br />
 
-<select @bind="SelectedRoomProp">
-    @foreach (var prop in Room.RoomProps)
+    <select @bind="SelectedRoomProp">
+        @foreach (var prop in Room.RoomProps)
+        {
+            <option value="@prop.Name">@prop.Name</option>
+        }
+    </select>
+    <br />
+    <span>The Room Prop selected is : @SelectedRoomProp</span>
+</div>
+
+<div>
+    <br />
+    <h2 class="text-info">Room List [Assignment 2]</h2>
+    <table class="table table-dark">
+        @foreach (var room in RoomsList)
+        {
+            <tr>
+                <td>
+                    <input type="text" @bind-value="room.RoomName" @bind-value:event="oninput" />
+                </td>
+                <td>
+                    <input type="text" @bind-value="room.Price" @bind-value:event="oninput" />
+                </td>
+                @foreach (var roomProp in room.RoomProps)
+                {
+                    <td>@roomProp.Name - @roomProp.Value</td>
+                }
+            </tr>
+        }
+    </table>
+    <br />
+    @foreach (var room in RoomsList)
     {
-        <option value="@prop.Name">@prop.Name</option>
+        <p>@room.RoomName's Price is @room.Price</p>
     }
-</select>
-<br />
-<span>The Room Prop selected is : @SelectedRoomProp</span>
+</div>
 
 @code{
 
@@ -60,7 +89,7 @@ Price: @Room.Price
             IsActive = true,
             Price = 399,
             RoomProps = new List<BlazorRoomProp>
-        {
+{
             new Model.BlazorRoomProp{Id=1,Name="Sq Ft",Value="330"},
             new Model.BlazorRoomProp{Id=2,Name="Occupancy",Value="4"},
 
@@ -74,7 +103,7 @@ Price: @Room.Price
             IsActive = true,
             Price = 699,
             RoomProps = new List<BlazorRoomProp>
-        {
+{
             new Model.BlazorRoomProp{Id=1,Name="Sq Ft",Value="150"},
             new Model.BlazorRoomProp{Id=2,Name="Occupancy",Value="6"},
 

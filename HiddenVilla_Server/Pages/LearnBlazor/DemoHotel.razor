@@ -20,7 +20,10 @@
         </div>
         @foreach (var amenity in AmenitiesList)
         {
-            <IndividualAmenities OnAmenitySelection="AmenitySelectionChanged" Amenities="@amenity"></IndividualAmenities>
+            <IndividualAmenities OnAmenitySelection="AmenitySelectionChanged" Amenities="@amenity">
+                <FirstFragment>#1</FirstFragment>
+                <SecondFragment>#2</SecondFragment>
+            </IndividualAmenities>
         }
     </div>
     <div class="col-12">

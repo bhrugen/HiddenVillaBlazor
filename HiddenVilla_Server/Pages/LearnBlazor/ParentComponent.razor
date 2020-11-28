@@ -2,13 +2,13 @@
 
 
 <h1 class="text-danger">Parent Child Component</h1>
+<CascadingValue Value="@messageForGrandChild">
+    <ChildComponent OnClickBtnMethod="ShowMessage" Title="This title is passed as parameter from Parent Component">
+        @*<ChildContent>Render Fragement From Parent! WooHOO!</ChildContent>*@
+        <DangerChildContent>Danger Content from Render Fragement! WooHOO!</DangerChildContent>
 
-<ChildComponent OnClickBtnMethod="ShowMessage" Title="This title is passed as parameter from Parent Component"
-                MessageForGrandChild="This is a meesage from Grand Parent">
-    @*<ChildContent>Render Fragement From Parent! WooHOO!</ChildContent>*@
-    <DangerChildContent>Danger Content from Render Fragement! WooHOO!</DangerChildContent>
-
-</ChildComponent>
+    </ChildComponent>
+</CascadingValue>
 <AnotherChildComponent placeholder="Placeholder default"></AnotherChildComponent>
 
 
@@ -18,7 +18,7 @@
 @code {
 
 
-
+    private string messageForGrandChild = "This is a meesage from Grand Parent";
     private string messageText = "";
 
     private void ShowMessage(MouseEventArgs e)

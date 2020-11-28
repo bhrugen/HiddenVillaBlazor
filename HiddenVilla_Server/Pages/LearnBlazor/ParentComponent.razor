@@ -8,13 +8,22 @@
     <DangerChildContent>Danger Content from Render Fragement! WooHOO!</DangerChildContent>
 
 </ChildComponent>
-<AnotherChildComponent Placeholder="Enter the Room Name From Parent" MaxLength="5"></AnotherChildComponent>
+<AnotherChildComponent InputAttributes="InputAttributesFromParent"></AnotherChildComponent>
 
 
 <p><b>@messageText</b></p>
 
 
 @code {
+
+    public Dictionary<string, object> InputAttributesFromParent { get; set; } = new Dictionary<string, object>()
+{
+        { "required" , "required"},
+        { "placeholder", "Enter the Room Name From Parent"},
+        { "maxlength", 5}
+
+    };
+
     private string messageText = "";
 
     private void ShowMessage(MouseEventArgs e)

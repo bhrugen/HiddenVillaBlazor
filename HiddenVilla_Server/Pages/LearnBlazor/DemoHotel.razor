@@ -8,24 +8,7 @@
     <div class="row container">
         @foreach (var room in RoomsList)
         {
-            <div class="bg-light border p-2 col-5">
-                <h4 class="text-secondary">Room - @room.Id</h4>
-
-                @room.RoomName<br />
-                @room.Price.ToString("c")<br />
-                <input type="checkbox" @bind-value="room.IsActive" checked="@(room.IsActive?"checked":null)" /> &nbsp; Is Active<br />
-                <span>This room is @(room.IsActive?"Active": "InActive")</span>
-
-                @if (room.IsActive)
-                {
-                    @foreach (var roomProp in room.RoomProps)
-                    {
-                        <p>@roomProp.Name - @roomProp.Value</p>
-                    }
-                }
-
-                <EditDeleteButton IsAdmin="false"></EditDeleteButton>
-            </div>
+            <IndividualRoom Room="@room"></IndividualRoom>
         }
     </div>
 </div>

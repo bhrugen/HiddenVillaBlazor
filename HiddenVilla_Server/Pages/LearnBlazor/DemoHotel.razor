@@ -8,10 +8,11 @@
     <div class="row container">
         <div class="col-12">
             <h4 class="text-info">Hotel Room's</h4>
+            <span>Rooms Selected - @SelectedRooms</span>
         </div>
         @foreach (var room in RoomsList)
         {
-            <IndividualRoom Room="@room"></IndividualRoom>
+            <IndividualRoom OnRoomCheckBoxSelection="RoomSelectionCounterChanged" Room="@room"></IndividualRoom>
         }
 
         <div class="col-12 mt-4">
@@ -29,6 +30,7 @@
 
 @code{
 
+    public int SelectedRooms { get; set; } = 0;
     List<BlazorRoom> RoomsList = new List<BlazorRoom>();
     List<BlazorAmenities> AmenitiesList = new List<BlazorAmenities>();
 
@@ -86,6 +88,19 @@
             Name = "Free Brakfast",
             Description = "Enjoy free breakfast at out hotel."
         });
+    }
+
+
+    protected void RoomSelectionCounterChanged(bool isRoomSelected)
+    {
+        if (isRoomSelected)
+        {
+            SelectedRooms++;
+        }
+        else
+        {
+            SelectedRooms--;
+        }
     }
 
 }

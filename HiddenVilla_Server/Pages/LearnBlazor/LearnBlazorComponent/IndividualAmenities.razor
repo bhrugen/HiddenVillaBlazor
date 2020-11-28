@@ -1,0 +1,14 @@
+﻿@using HiddenVilla_Server.Model
+
+<div class="bg-light border p-2 col-5 offset-1">
+    <h4 class="text-secondary">Amenities - @Amenities.Id</h4>
+
+    @Amenities.Name<br />
+    @Amenities.Description<br />
+</div>
+
+@code {
+
+    [Parameter]
+    public BlazorAmenities Amenities { get; set; }
+}

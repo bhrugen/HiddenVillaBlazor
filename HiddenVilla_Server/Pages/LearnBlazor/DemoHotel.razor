@@ -1,0 +1,77 @@
+﻿@page "/demoHotel"
+@using Model
+
+<h3>We will display hotel rooms and amenitites here!</h3>
+<div class="border p-2 mt-2" style="background-color:azure">
+    <h2 class="text-info">Rool List [USING COMPONENT]</h2>
+    <div class="row container">
+        @foreach (var room in RoomsList)
+        {
+            <div class="bg-light border p-2 col-5">
+                <h4 class="text-secondary">Room - @room.Id</h4>
+
+                @room.RoomName<br />
+                @room.Price.ToString("c")<br />
+                <input type="checkbox" @bind-value="room.IsActive" checked="@(room.IsActive?"checked":null)" /> &nbsp; Is Active<br />
+                <span>This room is @(room.IsActive?"Active": "InActive")</span>
+
+                @if (room.IsActive)
+                {
+                    @foreach (var roomProp in room.RoomProps)
+                    {
+                        <p>@roomProp.Name - @roomProp.Value</p>
+                    }
+                }
+
+                <input type="button" class="btn btn-danger" value="Delete" />
+                <input type="button" class="btn btn-success" value="Edit" />
+
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+@code{
+
+    List<BlazorRoom> RoomsList = new List<BlazorRoom>();
+
+
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        RoomsList.Add(new BlazorRoom()
+        {
+            Id = 201,
+            RoomName = "Villa Suite One Bed Room",
+            IsActive = true,
+            Price = 399,
+            RoomProps = new List<BlazorRoomProp>
+{
+            new Model.BlazorRoomProp{Id=1,Name="Sq Ft",Value="330"},
+            new Model.BlazorRoomProp{Id=2,Name="Occupancy",Value="4"},
+
+             }
+        });
+
+        RoomsList.Add(new BlazorRoom()
+        {
+            Id = 301,
+            RoomName = "Villa Suite Two Bed Room",
+            IsActive = true,
+            Price = 699,
+            RoomProps = new List<BlazorRoomProp>
+{
+            new Model.BlazorRoomProp{Id=1,Name="Sq Ft",Value="150"},
+            new Model.BlazorRoomProp{Id=2,Name="Occupancy",Value="6"},
+
+            }
+        });
+    }
+
+}

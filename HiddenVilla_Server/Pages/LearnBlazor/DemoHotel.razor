@@ -1,6 +1,7 @@
 ﻿@page "/demoHotel"
 @using Model
 
+
 <h3>We will display hotel rooms and amenitites here!</h3>
 <div class="border p-2 mt-2" style="background-color:azure">
     <h2 class="text-info">Rool List [USING COMPONENT]</h2>
@@ -23,9 +24,7 @@
                     }
                 }
 
-                <input type="button" class="btn btn-danger" value="Delete" />
-                <input type="button" class="btn btn-success" value="Edit" />
-
+                <EditDeleteButton></EditDeleteButton>
             </div>
         }
     </div>

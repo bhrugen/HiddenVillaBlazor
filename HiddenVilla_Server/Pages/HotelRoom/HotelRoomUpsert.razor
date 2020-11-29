@@ -11,6 +11,26 @@
                         <label>Name</label>
                         <InputText @bind-Value="HotelRoomModel.Name" class="form-control"></InputText>
                     </div>
+                    <div class="form-group">
+                        <label>Occupancy</label>
+                        <InputNumber @bind-Value="HotelRoomModel.Occupancy" class="form-control"></InputNumber>
+                    </div>
+                    <div class="form-group">
+                        <label>Rate</label>
+                        <InputNumber @bind-Value="HotelRoomModel.RegularRate" class="form-control"></InputNumber>
+                    </div>
+                    <div class="form-group">
+                        <label>Sq ft.</label>
+                        <InputText @bind-Value="HotelRoomModel.SqFt" class="form-control"></InputText>
+                    </div>
+                    <div class="form-group">
+                        <label>Details</label>
+                        <InputTextArea @bind-Value="HotelRoomModel.Details" class="form-control"></InputTextArea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary">@Title Room</button>
+                        <NavLink href="hotel-room" class="btn btn-secondary">Back to Index</NavLink>
+                    </div>
                 </EditForm>
             </div>
         </div>

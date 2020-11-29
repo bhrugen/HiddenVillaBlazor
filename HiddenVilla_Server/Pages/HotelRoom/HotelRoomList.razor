@@ -1,4 +1,7 @@
 ﻿@page "/hotel-room"
+@using Models
+@using Business.Repository.IRepository
+@inject IHotelRoomRepository HotelRoomRepository
 
 <div class="row mt-4">
     <div class="col-8">
@@ -8,7 +11,52 @@
         <NavLink href="hotel-room/create" class="btn btn-info form-control">Add New Room</NavLink>
     </div>
 </div>
+<div class="row mt-4">
+    <div class="col-12">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Occupancy</th>
+                    <th>Rate</th>
+                    <th>
+                        Sqft
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (HotelRooms.Any())
+                {
+                    foreach (var room in HotelRooms)
+                    {
+                        <tr>
+                            <td>@room.Name</td>
+                            <td>@room.Occupancy</td>
+                            <td>@room.RegularRate.ToString("c")</td>
+                            <td>@room.SqFt</td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">No records found</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @code {
+    private IEnumerable<HotelRoomDTO> HotelRooms { get; set; } = new List<HotelRoomDTO>();
 
+    protected override async Task OnInitializedAsync()
+    {
+        HotelRooms = await HotelRoomRepository.GetAllHotelRooms();
+    }
 }

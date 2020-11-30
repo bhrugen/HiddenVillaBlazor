@@ -216,12 +216,12 @@
             {
                 var result = FileUpload.DeleteFile(imageName);
             }
+            HotelRoomModel.ImageUrls.RemoveAt(imageIndex);
         }
         catch (Exception ex)
         {
             await JsRuntime.ToastrError(ex.Message);
         }
 
-        StateHasChanged();
     }
 }

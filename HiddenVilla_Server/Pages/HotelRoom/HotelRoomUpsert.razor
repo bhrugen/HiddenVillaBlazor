@@ -112,6 +112,10 @@
             {
                 //update
                 var updateRoomResult = await HotelRoomRepository.UpdateHotelRoom(HotelRoomModel.Id, HotelRoomModel);
+                if (HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Any())
+                {
+                    await AddHotelRoomImage(updateRoomResult);
+                }
                 await JsRuntime.ToastrSuccess("Hotel room updated successfully.");
             }
             else
@@ -189,12 +193,16 @@
     {
         foreach (var imageUrl in HotelRoomModel.ImageUrls)
         {
-            RoomImage = new HotelRoomImageDTO()
+            if (HotelRoomModel.HotelRoomImages.Where(x => x.RoomImageUrl == imageUrl).Count() == 0)
             {
-                RoomId = roomDetails.Id,
-                RoomImageUrl = imageUrl
-            };
-            await HotelImagesRepository.CreateHotelRoomImage(RoomImage);
+
+                RoomImage = new HotelRoomImageDTO()
+                {
+                    RoomId = roomDetails.Id,
+                    RoomImageUrl = imageUrl
+                };
+                await HotelImagesRepository.CreateHotelRoomImage(RoomImage);
+            }
         }
     }
 }

@@ -2,10 +2,11 @@
 @page "/hotel-room/edit/{Id:int}"
 @using Models
 @using Business.Repository.IRepository
+@using HiddenVilla_Server.Service.IService
 @inject IHotelRoomRepository HotelRoomRepository
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
-
+@inject IFileUpload FileUpload
 <div class="row mt-2 mb-5">
     <h3 class="card-title text-info mb-3 ml-3">@Title Hotel Room</h3>
     <div class="col-md-12">
@@ -107,8 +108,52 @@
         NavigationManager.NavigateTo("hotel-room");
     }
 
-    private async Task HandleImageUpload()
+    private async Task HandleImageUpload(InputFileChangeEventArgs e)
     {
+        try
+        {
+            var images = new List<string>();
+            if (e.GetMultipleFiles().Count > 0)
+            {
+                foreach (var file in e.GetMultipleFiles())
+                {
+                    System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.Name);
+                    if (fileInfo.Extension.ToLower() == ".jpg" ||
+                        fileInfo.Extension.ToLower() == ".png" ||
+                        fileInfo.Extension.ToLower() == ".jpeg")
+                    {
+                        var uploadedImagePath = await FileUpload.UploadFile(file);
+                        images.Add(uploadedImagePath);
+                    }
+                    else
+                    {
+                        await JsRuntime.ToastrError("Please select .jpg/.jpeg/.png file only");
+                        return;
+                    }
+                }
 
+                if (images.Any())
+                {
+                    if (HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Any())
+                    {
+                        HotelRoomModel.ImageUrls.AddRange(images);
+                    }
+                    else
+                    {
+                        HotelRoomModel.ImageUrls = new List<string>();
+                        HotelRoomModel.ImageUrls.AddRange(images);
+                    }
+                }
+                else
+                {
+                    await JsRuntime.ToastrError("Image uploading failed");
+                    return;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await JsRuntime.ToastrError(ex.Message);
+        }
     }
 }

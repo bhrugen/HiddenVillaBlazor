@@ -18,5 +18,6 @@ namespace Models
         public double RegularRate { get; set; }
         public string Details { get; set; }
         public string SqFt { get; set; }
+        public virtual ICollection<HotelRoomImageDTO> HotelRoomImages { get; set; }
     }
 }

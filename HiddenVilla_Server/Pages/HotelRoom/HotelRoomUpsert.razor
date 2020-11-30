@@ -38,6 +38,9 @@
                         <InputTextArea @bind-Value="HotelRoomModel.Details" class="form-control"></InputTextArea>
                     </div>
                     <div class="form-group">
+                        <InputFile OnChange="HandleImageUpload" multipe></InputFile>
+                    </div>
+                    <div class="form-group">
                         <button class="btn btn-primary">@Title Room</button>
                         <NavLink href="hotel-room" class="btn btn-secondary">Back to Index</NavLink>
                     </div>
@@ -102,5 +105,10 @@
 
 
         NavigationManager.NavigateTo("hotel-room");
+    }
+
+    private async Task HandleImageUpload()
+    {
+
     }
 }

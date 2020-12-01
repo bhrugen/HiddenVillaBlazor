@@ -3,7 +3,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        @onclick="()=>OnConfirmationChange(false)">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -11,14 +12,21 @@
                 Are you sure you want to delete
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="()=>OnConfirmationChange(false)">
                     Cancel
                 </button>
 
+                @if (IsProcessStart)
+                {
+                    <button type="button" class="btn btn-danger"><i class="fa fa-spin fa-spinner"></i>Processing..</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-danger" @onclick="()=>OnConfirmationChange(true)">
+                        Delete
+                    </button>
 
-                <button type="button" class="btn btn-danger">
-                    Delete
-                </button>
+                }
 
 
             </div>
@@ -27,4 +35,18 @@
 </div>
 @code {
 
+    public bool IsProcessStart { get; set; } = false;
+
+    [Parameter]
+    public EventCallback<bool> ConfirmationChanged { get; set; }
+
+
+    protected async Task OnConfirmationChange(bool value)
+    {
+        if (value)
+        {
+            IsProcessStart = true;
+        }
+        await ConfirmationChanged.InvokeAsync(value);
+    }
 }

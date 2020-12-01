@@ -218,7 +218,7 @@
     {
         foreach (var imageUrl in HotelRoomModel.ImageUrls)
         {
-            if (HotelRoomModel.HotelRoomImages.Where(x => x.RoomImageUrl == imageUrl).Count() == 0)
+            if (HotelRoomModel.HotelRoomImages == null || HotelRoomModel.HotelRoomImages.Where(x => x.RoomImageUrl == imageUrl).Count() == 0)
             {
 
                 RoomImage = new HotelRoomImageDTO()

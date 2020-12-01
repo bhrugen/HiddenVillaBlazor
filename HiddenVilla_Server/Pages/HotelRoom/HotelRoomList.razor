@@ -3,6 +3,7 @@
 @using Business.Repository.IRepository
 @inject IHotelRoomRepository HotelRoomRepository
 @inject IJSRuntime JsRuntime
+@inject HiddenVilla_Server.Service.IService.IFileUpload FileUpload
 <div class="row mt-4">
     <div class="col-8">
         <h4 class="card-title text-info">Hotel Room's</h4>
@@ -39,7 +40,7 @@
                             <td>@room.SqFt</td>
                             <td>
                                 <NavLink href="@($"hotel-room/edit/{room.Id}")" class="btn btn-primary">Edit</NavLink>
-                                <button class="btn btn-danger" @onclick="()=>HandleDelete(room.Id)">Delete</button>
+
                             </td>
                         </tr>
                     }
@@ -56,7 +57,7 @@
 </div>
 
 
-<DeleteConfirmation></DeleteConfirmation>
+<DeleteConfirmation ConfirmationChanged="ConfirmDelete_Click"></DeleteConfirmation>
 
 @code {
     private IEnumerable<HotelRoomDTO> HotelRooms { get; set; } = new List<HotelRoomDTO>();
@@ -78,6 +79,13 @@
     {
         if (isConfirmed && DeleteRoomId != null)
         {
+            HotelRoomDTO hotelRoom = await HotelRoomRepository.GetHotelRoom(DeleteRoomId.Value);
+            foreach (var image in hotelRoom.HotelRoomImages)
+            {
+                var imageName = image.RoomImageUrl.Replace($"RoomImages/", "");
+                FileUpload.DeleteFile(imageName);
+            }
+
             await HotelRoomRepository.DeleteHotelRoom(DeleteRoomId.Value);
             await JsRuntime.ToastrSuccess("Hotel Room Deleted successfully");
             HotelRooms = await HotelRoomRepository.GetAllHotelRooms();

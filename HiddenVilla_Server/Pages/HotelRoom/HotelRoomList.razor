@@ -61,7 +61,6 @@
 @code {
     private IEnumerable<HotelRoomDTO> HotelRooms { get; set; } = new List<HotelRoomDTO>();
     private int? DeleteRoomId { get; set; } = null;
-    private bool IsDeleteProcessComplete { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -72,7 +71,6 @@
     private async Task HandleDelete(int roomId)
     {
         DeleteRoomId = roomId;
-        IsDeleteProcessComplete = false;
         await JsRuntime.InvokeVoidAsync("ShowDeleteConfirmationModal");
     }
 
@@ -83,13 +81,7 @@
             await HotelRoomRepository.DeleteHotelRoom(DeleteRoomId.Value);
             await JsRuntime.ToastrSuccess("Hotel Room Deleted successfully");
             HotelRooms = await HotelRoomRepository.GetAllHotelRooms();
-            IsDeleteProcessComplete = true;
-        }
-        else
-        {
-            IsDeleteProcessComplete = false;
         }
         await JsRuntime.InvokeVoidAsync("HideDeleteConfirmationModal");
-
     }
 }

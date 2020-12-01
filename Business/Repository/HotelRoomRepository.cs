@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,16 @@ namespace Business.Repository
             var roomDetails = await _db.HotelRooms.FindAsync(roomId);
             if (roomDetails != null)
             {
+
+                var allimages = await _db.HotelRoomImages.Where(x => x.RoomId == roomId).ToListAsync();
+                foreach (var image in allimages)
+                {
+                    if (File.Exists(image.RoomImageUrl))
+                    {
+                        File.Delete(image.RoomImageUrl);
+                    }
+                }
+                _db.HotelRoomImages.RemoveRange(allimages);
                 _db.HotelRooms.Remove(roomDetails);
                 return await _db.SaveChangesAsync();
             }

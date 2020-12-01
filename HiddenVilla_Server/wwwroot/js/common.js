@@ -23,4 +23,12 @@ window.ShowSwal = (type, message) => {
             'error'
         )
     }
-} 
+}
+
+function ShowDeleteConfirmationModal() {
+    $('#deleteConfirmationModal').modal('show');
+}
+
+function HideDeleteConfirmationModal() {
+    $('#deleteConfirmationModal').modal('hide');
+}

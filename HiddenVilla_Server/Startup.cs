@@ -17,6 +17,7 @@ using Business.Repository.IRepository;
 using Business.Repository;
 using HiddenVilla_Server.Service;
 using HiddenVilla_Server.Service.IService;
+using Microsoft.AspNetCore.Identity;
 
 namespace HiddenVilla_Server
 {
@@ -35,6 +36,11 @@ namespace HiddenVilla_Server
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders()
+                .AddDefaultUI();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IHotelRoomRepository, HotelRoomRepository>();
             services.AddScoped<IAmenityRepository, AmenityRepository>();

@@ -40,7 +40,7 @@
                             <td>@room.SqFt</td>
                             <td>
                                 <NavLink href="@($"hotel-room/edit/{room.Id}")" class="btn btn-primary">Edit</NavLink>
-
+                                <button class="btn btn-danger" @onclick="()=>HandleDelete(room.Id)">Delete</button>
                             </td>
                         </tr>
                     }
@@ -57,12 +57,12 @@
 </div>
 
 
-<DeleteConfirmation ConfirmationChanged="ConfirmDelete_Click"></DeleteConfirmation>
+<DeleteConfirmation IsParentComponentProcessing="IsProcessing" ConfirmationChanged="ConfirmDelete_Click"></DeleteConfirmation>
 
 @code {
     private IEnumerable<HotelRoomDTO> HotelRooms { get; set; } = new List<HotelRoomDTO>();
     private int? DeleteRoomId { get; set; } = null;
-
+    private bool IsProcessing { get; set; } = false;
     protected override async Task OnInitializedAsync()
     {
         HotelRooms = await HotelRoomRepository.GetAllHotelRooms();
@@ -77,6 +77,7 @@
 
     public async Task ConfirmDelete_Click(bool isConfirmed)
     {
+        IsProcessing = true;
         if (isConfirmed && DeleteRoomId != null)
         {
             HotelRoomDTO hotelRoom = await HotelRoomRepository.GetHotelRoom(DeleteRoomId.Value);
@@ -91,5 +92,6 @@
             HotelRooms = await HotelRoomRepository.GetAllHotelRooms();
         }
         await JsRuntime.InvokeVoidAsync("HideDeleteConfirmationModal");
+        IsProcessing = false;
     }
 }

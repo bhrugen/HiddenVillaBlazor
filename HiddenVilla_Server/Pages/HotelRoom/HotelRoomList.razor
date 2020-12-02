@@ -5,7 +5,7 @@
 @inject IJSRuntime JsRuntime
 @inject HiddenVilla_Server.Service.IService.IFileUpload FileUpload
 @inject NavigationManager NavigationManager
-@attribute [Authorize]
+@attribute [Authorize(Roles = Common.SD.Role_Admin)]
 <div class="row mt-4">
     <div class="col-8">
         <h4 class="card-title text-info">Hotel Room's</h4>

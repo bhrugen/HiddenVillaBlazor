@@ -5,7 +5,7 @@
 @inject IAmenityRepository AmenityRepository
 @inject NavigationManager NavigationManager
 @inject IJSRuntime jsRuntime
-@attribute [Authorize]
+@attribute [Authorize(Roles = Common.SD.Role_Admin)]
 <div class="row mt-2 mb-5">
     <h3 class="card-title text-info mb-3 ml-3">@Title Hotel Amenity</h3>
 

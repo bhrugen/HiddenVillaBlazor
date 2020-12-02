@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\DataAcesss\DataAcesss.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>

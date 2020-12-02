@@ -29,6 +29,7 @@ namespace HiddenVilla_Api.Controllers
             _signInManager = signInManager;
         }
 
+        [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> SignUp([FromBody] UserRequestDTO userRequestDTO)
         {
@@ -46,7 +47,7 @@ namespace HiddenVilla_Api.Controllers
                 EmailConfirmed = true
             };
 
-            var result = await _userManager.CreateAsync(user, userRequestDTO.PhoneNo);
+            var result = await _userManager.CreateAsync(user, userRequestDTO.Password);
 
             if (!result.Succeeded)
             {

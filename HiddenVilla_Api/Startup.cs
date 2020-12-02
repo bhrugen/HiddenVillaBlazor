@@ -2,6 +2,7 @@ using AutoMapper;
 using Business.Repository;
 using Business.Repository.IRepository;
 using DataAcesss.Data;
+using HiddenVilla_Api.Helper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,6 +38,12 @@ namespace HiddenVilla_Api
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+            var appSettingsSection = Configuration.GetSection("APISettings");
+            services.Configure<APISettings>(appSettingsSection);
+
+
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IHotelRoomRepository, HotelRoomRepository>();
             services.AddScoped<IAmenityRepository, AmenityRepository>();

@@ -1,8 +1,10 @@
 ﻿using Common;
 using DataAcesss.Data;
+using HiddenVilla_Api.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -19,14 +21,17 @@ namespace HiddenVilla_Api.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly APISettings _aPISettings;
 
         public AccountController(SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IOptions<APISettings> options)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _signInManager = signInManager;
+            _aPISettings = options.Value;
         }
 
         [HttpPost]

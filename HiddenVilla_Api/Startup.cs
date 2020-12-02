@@ -108,6 +108,7 @@ namespace HiddenVilla_Api
             app.UseCors("HiddenVilla");
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

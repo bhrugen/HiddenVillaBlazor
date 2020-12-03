@@ -2,6 +2,7 @@
 @using HiddenVilla_Client.Model.ViewModel
 @inject ILocalStorageService localStorage
 @inject IJSRuntime jsRuntime
+@inject NavigationManager navigationManager
 
 <div class="row p-0 m-0">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -71,7 +72,8 @@
         {
             HomeModel.EndDate = HomeModel.StartDate.AddDays(HomeModel.NoOfNights);
 
-            await localStorage.SetItemAsync("InitialRoomBookingInfo", HomeModel);
+            await localStorage.SetItemAsync(SD.Local_InitialBooking, HomeModel);
+            navigationManager.NavigateTo("hotel/rooms", true);
         }
         catch (Exception e)
         {

@@ -3,110 +3,117 @@
 @inject IJSRuntime jsRuntime
 @inject IHotelRoomService hotelRoomService
 
+@if (Rooms != null && Rooms.Any())
+{
+    <EditForm Model="HomeModel" OnValidSubmit="SaveBookingInfo" class="bg-light">
 
-<EditForm Model="HomeModel" OnValidSubmit="SaveBookingInfo" class="bg-light">
-
-    <div class="pt-3 pb-2 px-5 mx-1 mx-md-0 bg-secondary">
-        <DataAnnotationsValidator />
-        <div class="row px-3 mx-3">
-            <div class="col-6 col-md-4">
-                <div class="form-group">
-                    <label class="text-warning">Check in Date</label>
-                    <InputDate @bind-Value="HomeModel.StartDate" class="form-control" />
+        <div class="pt-3 pb-2 px-5 mx-1 mx-md-0 bg-secondary">
+            <DataAnnotationsValidator />
+            <div class="row px-3 mx-3">
+                <div class="col-6 col-md-4">
+                    <div class="form-group">
+                        <label class="text-warning">Check in Date</label>
+                        <InputDate @bind-Value="HomeModel.StartDate" class="form-control" />
+                    </div>
                 </div>
-            </div>
-            <div class="col-6 col-md-4">
-                <div class="form-group">
-                    <label class="text-warning">Check Out Date</label>
-                    <input @bind="HomeModel.EndDate" disabled="disabled" readonly="readonly" type="date" class="form-control" />
+                <div class="col-6 col-md-4">
+                    <div class="form-group">
+                        <label class="text-warning">Check Out Date</label>
+                        <input @bind="HomeModel.EndDate" disabled="disabled" readonly="readonly" type="date" class="form-control" />
+                    </div>
                 </div>
-            </div>
-            <div class=" col-4 col-md-2">
-                <div class="form-group">
-                    <label class="text-warning">No. of nights</label>
-                    <select class="form-control" @bind="HomeModel.NoOfNights">
-                        <option value="Select" selected disabled="disabled">(Select No. Of Nights)</option>
-                        @for (var i = 1; i <= 10; i++)
-                        {
-                            <option value="@i">@i</option>
-                        }
-                    </select>
+                <div class=" col-4 col-md-2">
+                    <div class="form-group">
+                        <label class="text-warning">No. of nights</label>
+                        <select class="form-control" @bind="HomeModel.NoOfNights">
+                            <option value="Select" selected disabled="disabled">(Select No. Of Nights)</option>
+                            @for (var i = 1; i <= 10; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-8 col-md-2">
-                <div class="form-group" style="margin-top: 1.9rem !important;">
+                <div class="col-8 col-md-2">
+                    <div class="form-group" style="margin-top: 1.9rem !important;">
 
-                    <input type="submit" value="Update" class="btn btn-success btn-block form-control" />
+                        <input type="submit" value="Update" class="btn btn-success btn-block form-control" />
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</EditForm>
-<div class="mt-4 mx-4 px-0 px-md-5 mx-md-5">
+    </EditForm>
+    <div class="mt-4 mx-4 px-0 px-md-5 mx-md-5">
 
+        @foreach (var room in Rooms)
+        {
 
-
-    <div class="row p-2 my-3 " style="border-radius:20px; border: 1px solid #ffffff">
-        <div class="col-12 col-lg-3 col-md-4">
-            <div id="carouselExampleIndicators" class="carousel slide mb-4 m-md-3 m-0 pt-3 pt-md-0" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="images/slide1.jpg" alt="First slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="images/slide2.jpg" alt="Second slide">
+            <div class="row p-2 my-3 " style="border-radius:20px; border: 1px solid #ffffff">
+                <div class="col-12 col-lg-3 col-md-4">
+                    <div id="carouselExampleIndicators" class="carousel slide mb-4 m-md-3 m-0 pt-3 pt-md-0" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="images/slide1.jpg" alt="First slide">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-        <div class="col-12 col-lg-9 col-md-8">
-            <div class="row pt-3">
-                <div class="col-12 col-lg-8">
-                    <p class="card-title text-warning" style="font-size:xx-large">##ROOM NAME##</p>
-                    <p class="card-text">
-                        ##ROOM DETAILS##
-                    </p>
-                </div>
-                <div class="col-12 col-lg-4">
-                    <div class="row pb-3 pt-2">
-                        <div class="col-12 col-lg-11 offset-lg-1">
+                <div class="col-12 col-lg-9 col-md-8">
+                    <div class="row pt-3">
+                        <div class="col-12 col-lg-8">
+                            <p class="card-title text-warning" style="font-size:xx-large">@room.Name</p>
+                            <p class="card-text">
+                                @((MarkupString)room.Details)
+                            </p>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="row pb-3 pt-2">
+                                <div class="col-12 col-lg-11 offset-lg-1">
 
-                            <a href="#" class="btn btn-success btn-block">Book</a>
+                                    <a href="@($"hotel/room-details/{room.Id}")" class="btn btn-success btn-block">Book</a>
+
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-12 pb-5">
+                                    <span class="float-right">
+                                        <span class="float-right">Max Occupancy : @room.Occupancy adults </span><br />
+                                        <span class="float-right pt-1">Villa Size : @room.SqFt sqft</span><br />
+                                        <h4 class="text-warning font-weight-bold pt-4">USD <span style="border-bottom:1px solid #ff6a00">##</span></h4>
+                                        <span class="float-right">Cost for  ## nights</span>
+                                    </span>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
-                    <div class="row ">
-                        <div class="col-12 pb-5">
-                            <span class="float-right">
-                                <span class="float-right">Max Occupancy : ## adults </span><br />
-                                <span class="float-right pt-1">Villa Size : ## sqft</span><br />
-                                <h4 class="text-warning font-weight-bold pt-4">USD <span style="border-bottom:1px solid #ff6a00">##</span></h4>
-                                <span class="float-right">Cost for  ## nights</span>
-                            </span>
-                        </div>
-                    </div>
-
                 </div>
             </div>
-        </div>
+        }
+
     </div>
+}
+else
+{
+    <div style="position:fixed;top:50%;left:50%;margin-top:-50px;margin-left:-100px;">
+        <img src="images/ajax-loader.gif" />
+    </div>
+}
 
-
-</div>
 
 @code {
     private HomeVM HomeModel { get; set; } = new HomeVM();

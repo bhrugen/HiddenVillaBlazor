@@ -13,6 +13,7 @@
     {
         try
         {
+
             if (await localStorage.GetItemAsync<HomeVM>(SD.Local_InitialBooking) != null)
             {
                 HomeModel = await localStorage.GetItemAsync<HomeVM>(SD.Local_InitialBooking);

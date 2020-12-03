@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using HiddenVilla_Client.Model.ViewModel
 
 <div class="row p-0 m-0">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -24,20 +25,20 @@
         </a>
     </div>
 </div>
-<form>
+<EditForm Model="HomeModel">
     <div class="row p-0 mx-0 mt-4">
 
         <div class="col-12 col-md-5  offset-md-1 pl-2  pr-2 pr-md-0">
             <div class="form-group">
                 <label>Check In Date</label>
-                <input type="text" class="form-control" />
+                <InputDate min="@DateTime.Now.ToString("yyyy-MM-dd")" @bind-Value="HomeModel.StartDate" type="text" class="form-control" />
             </div>
         </div>
 
         <div class="col-8 col-md-3 pl-2 pr-2">
             <div class="form-group">
                 <label>No. of nights</label>
-                <select class="form-control">
+                <select class="form-control" @bind="HomeModel.NoOfNights">
                     @for (var i = 1; i <= 10; i++)
                     {
                         <option value="@i">@i</option>
@@ -56,4 +57,10 @@
         </div>
 
     </div>
-</form>
+</EditForm>
+
+@code{
+
+    public HomeVM HomeModel { get; set; } = new HomeVM();
+
+}

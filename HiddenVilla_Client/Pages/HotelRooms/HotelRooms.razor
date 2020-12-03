@@ -1,7 +1,30 @@
 ﻿@page "/hotel/rooms"
+@inject LocalStorageService localStorage
+@inject JSRuntime jsRuntime
 
 <h3>HotelRooms</h3>
 
 @code {
+    private HomeVM HomeModel { get; set; } = new HomeVM();
+    public IEnumerable<HotelRoomDTO> Rooms { get; set; } = new List<HotelRoomDTO>();
 
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            if (await localStorage.GetItemAsync<HomeVM>(SD.Local_InitialBooking) != null)
+            {
+                HomeModel = await localStorage.GetItemAsync<HomeVM>(SD.Local_InitialBooking);
+            }
+            else
+            {
+                HomeModel.NoOfNights = 1;
+            }
+            await LoadRooms();
+        }
+        catch (Exception e)
+        {
+            await jsRuntime.ToastrError(e.Message);
+        }
+    }
 }

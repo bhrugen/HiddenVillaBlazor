@@ -3,68 +3,113 @@
 @inject ILocalStorageService localStorage
 @inject IJSRuntime jsRuntime
 @inject NavigationManager navigationManager
-
-<div class="row p-0 m-0">
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="images/slide1.jpg" alt="First slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="images/slide2.jpg" alt="Second slide">
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+@inject IHotelAmenityService hotelAmenityService
+@if (IsProcessing)
+{
+    <div style="position:fixed;top:50%;left:50%;margin-top:-50px;margin-left:-100px;">
+        <img src="images/ajax-loader.gif" />
     </div>
-</div>
-<EditForm Model="HomeModel" OnValidSubmit="SaveInitialData">
-    <div class="row p-0 mx-0 mt-4">
+}
+else
+{
+    <div class="row p-0 m-0">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="images/slide1.jpg" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="images/slide2.jpg" alt="Second slide">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    <EditForm Model="HomeModel" OnValidSubmit="SaveInitialData">
+        <div class="row p-0 mx-0 mt-4">
 
-        <div class="col-12 col-md-5  offset-md-1 pl-2  pr-2 pr-md-0">
-            <div class="form-group">
-                <label>Check In Date</label>
-                <InputDate min="@DateTime.Now.ToString("yyyy-MM-dd")" @bind-Value="HomeModel.StartDate" type="text" class="form-control" />
+            <div class="col-12 col-md-5  offset-md-1 pl-2  pr-2 pr-md-0">
+                <div class="form-group">
+                    <label>Check In Date</label>
+                    <InputDate min="@DateTime.Now.ToString("yyyy-MM-dd")" @bind-Value="HomeModel.StartDate" type="text" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-8 col-md-3 pl-2 pr-2">
+                <div class="form-group">
+                    <label>No. of nights</label>
+                    <select class="form-control" @bind="HomeModel.NoOfNights">
+                        @for (var i = 1; i <= 10; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-4 col-md-2 p-0 pr-2">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+
+                    <input type="submit" value="Go" class="btn btn-success btn-block" />
+
+                </div>
+            </div>
+
+        </div>
+    </EditForm>
+    <hr />
+    <div class="container pt-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2 text-center">
+                <h2 class="text-warning">Explore our Amenities</h2>
+                <p class="lead">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
             </div>
         </div>
+        <div class="row">
+            @foreach (var amenity in HotelAmenities)
+            {
+                <div class="col-md-4 col-6 p-4">
+                    <div style="border:1px solid #d5d5d5; border-radius:20px;">
+                        <div class="row col-4 offset-4 p-4">
+                            <i class="@amenity.IconStyle fa-4x"></i>
+                        </div>
+                        <div class="text-center justify-content-center">
+                            <h5 class="text-warning">@amenity.Name</h5>
+                            <p>@amenity.Description</p>
+                        </div>
 
-        <div class="col-8 col-md-3 pl-2 pr-2">
-            <div class="form-group">
-                <label>No. of nights</label>
-                <select class="form-control" @bind="HomeModel.NoOfNights">
-                    @for (var i = 1; i <= 10; i++)
-                    {
-                        <option value="@i">@i</option>
-                    }
-                </select>
-            </div>
-        </div>
-
-        <div class="col-4 col-md-2 p-0 pr-2">
-            <div class="form-group">
-                <label>&nbsp;</label>
-
-                <input type="submit" value="Go" class="btn btn-success btn-block" />
-
-            </div>
+                    </div>
+                </div>
+            }
         </div>
 
     </div>
-</EditForm>
+}
 
 @code{
 
     public HomeVM HomeModel { get; set; } = new HomeVM();
+    public IEnumerable<HotelAmenityDTO> HotelAmenities { get; set; } = new List<HotelAmenityDTO>();
+    public bool IsProcessing { get; set; } = false;
+    protected override async Task OnInitializedAsync()
+    {
+        IsProcessing = true;
+        HotelAmenities = await hotelAmenityService.GetHotelAmenities();
+        IsProcessing = false;
+    }
+
 
     private async Task SaveInitialData()
     {

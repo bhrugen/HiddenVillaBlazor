@@ -68,44 +68,50 @@ else
             </div>
 
             <div class="col-12 col-lg-5 p-4 2 mt-4 mt-md-0" style="border: 1px solid #fff;">
-                <form Model="HotelRoomBooking" class="container" OnValidSubmit="HandleCheckout">
-
+                <EditForm Model="HotelBooking" class="container" OnValidSubmit="HandleCheckout">
 
                     <div class="row px-2 text-success border-bottom"><div class="col-7 py-1"><p style="font-size:x-large;margin:0px;">Enter Details</p></div></div>
 
                     <div class="form-group pt-2">
                         <label class="text-warning">Name</label>
-                        <input type="text" class="form-control" />
+                        <InputText @bind-Value="HotelBooking.OrderDetails.Name" type="text" class="form-control" />
                     </div>
                     <div class="form-group pt-2">
                         <label class="text-warning">Phone</label>
-                        <input type="text" class="form-control" />
+                        <InputText @bind-Value="HotelBooking.OrderDetails.Phone" type="text" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label class="text-warning">Email</label>
-                        <input type="text" class="form-control" />
+                        <InputText @bind-Value="HotelBooking.OrderDetails.Email" type="text" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label class="text-warning">Check in Date</label>
-                        <input type="date" disabled class="form-control" />
+                        <InputDate @bind-Value="HotelBooking.OrderDetails.CheckInDate" type="date" disabled class="form-control" />
                     </div>
                     <div class="form-group">
                         <label class="text-warning">Check Out Date</label>
-                        <input type="date" disabled="disabled" class="form-control" />
+                        <InputDate @bind-Value="HotelBooking.OrderDetails.CheckOutDate" type="date" disabled class="form-control" />
                     </div>
                     <div class="form-group">
                         <label class="text-warning">No. of nights</label>
-                        <select class="form-control">
+                        <select class="form-control" value="@NoOfNights" @onchange="HandleNoOfNightsChange">
                             @for (var i = 1; i <= 10; i++)
                             {
-                                <option value="@i">@i</option>
+                                if (i == NoOfNights)
+                                {
+                                    <option value="@i" selected="selected">@i</option>
+                                }
+                                else
+                                {
+                                    <option value="@i">@i</option>
+                                }
                             }
                         </select>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success form-control">Checkout Now</button>
                     </div>
-                </form>
+                </EditForm>
             </div>
         </div>
     </div>

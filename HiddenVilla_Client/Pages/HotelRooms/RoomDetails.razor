@@ -2,6 +2,8 @@
 @inject IJSRuntime jsRuntime
 @inject ILocalStorageService localStorage
 @inject IHotelRoomService hotelRoomService
+@inject IStripePaymentService stripePaymentService
+@inject IRoomOrderDetailsService roomOrderDetailsService
 
 @if (HotelBooking?.OrderDetails?.HotelRoomDTO?.HotelRoomImages == null)
 {
@@ -182,6 +184,31 @@ else
         if (!await HandleValidation())
         {
             return;
+        }
+
+        try
+        {
+            var paymentDTO = new StripePaymentDTO()
+            {
+                Amount = Convert.ToInt32(HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount * 100),
+                ProductName = HotelBooking.OrderDetails.HotelRoomDTO.Name,
+                ReturnUrl = "/hotel/room-details/" + Id
+            };
+
+            var result = await stripePaymentService.CheckOut(paymentDTO);
+
+            HotelBooking.OrderDetails.StripeSessionId = result.Data.ToString();
+            HotelBooking.OrderDetails.RoomId = HotelBooking.OrderDetails.HotelRoomDTO.Id;
+            HotelBooking.OrderDetails.TotalCost = HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount;
+
+            var roomOrderDetailsSaved = await roomOrderDetailsService.SaveRoomOrderDetails(HotelBooking.OrderDetails);
+
+            await localStorage.SetItemAsync(SD.Local_RoomOrderDetails, roomOrderDetailsSaved);
+
+        }
+        catch (Exception e)
+        {
+            jsRuntime.ToastrError(e.Message);
         }
 
     }

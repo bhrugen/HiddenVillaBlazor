@@ -22,7 +22,7 @@ namespace DataAcesss.Data
         public DateTime ActualCheckInDate { get; set; }
         public DateTime ActualCheckOutDate { get; set; }
         [Required]
-        public long TotalCost { get; set; }
+        public double TotalCost { get; set; }
         [Required]
         public int RoomId { get; set; }
         public bool IsPaymentSuccessful { get; set; } = false;

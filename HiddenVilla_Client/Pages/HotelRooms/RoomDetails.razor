@@ -37,18 +37,23 @@
                 </div>
                 <div class="col-6">
                     <span class="float-right pt-4">
-                        <span class="float-right">Max Occupancy : XXXX adults </span><br />
-                        <span class="float-right pt-1">Villa Size : XXXX sqft</span><br />
-                        <h4 class="text-warning font-weight-bold pt-5">USD <span style="border-bottom:1px solid #ff6a00"> XXXX</span></h4>
-                        <span class="float-right">Cost for XXXX nights</span>
+                        <span class="float-right">Max Occupancy : @HotelBooking.OrderDetails.HotelRoomDTO.Occupancy adults </span><br />
+                        <span class="float-right pt-1">Villa Size : @HotelBooking.OrderDetails.HotelRoomDTO.SqFt sqft</span><br />
+                        <h4 class="text-warning font-weight-bold pt-5">
+                            USD
+                            <span style="border-bottom:1px solid #ff6a00">
+                                @HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount.ToString("#,#.00#;(#,#.00#)")
+                            </span>
+                        </h4>
+                        <span class="float-right">Cost for @HotelBooking.OrderDetails.HotelRoomDTO.TotalDays nights</span>
                     </span>
                 </div>
             </div>
             <div class="row p-2">
                 <div class="col-12">
-                    <p class="card-title text-warning" style="font-size:xx-large">XXNAMEXX</p>
+                    <p class="card-title text-warning" style="font-size:xx-large">@HotelBooking.OrderDetails.HotelRoomDTO.Name</p>
                     <p class="card-text" style="font-size:large">
-                        XXDETAILSXX
+                        @((MarkupString)@HotelBooking.OrderDetails.HotelRoomDTO.Details)
                     </p>
                 </div>
 
@@ -111,6 +116,7 @@
     {
         try
         {
+            await Task.Delay(5000);
             HotelBooking.OrderDetails = new RoomOrderDetailsDTO();
             if (Id != null)
             {

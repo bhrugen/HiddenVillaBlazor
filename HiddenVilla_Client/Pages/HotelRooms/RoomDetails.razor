@@ -1,4 +1,6 @@
 ﻿@page "/hotel/room-details/{Id:int}"
+@inject IJSRuntime jsRuntime
+@inject ILocalStorageService localStorage
 
 <div class="mt-4 mx-4 px-0 px-md-5 mx-md-5">
 
@@ -101,4 +103,26 @@
 @code {
     [Parameter]
     public int? Id { get; set; }
+
+    public HotelRoomBookingVM HotelBooking { get; set; } = new HotelRoomBookingVM();
+    private int NoOfNights { get; set; } = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            HotelBooking.OrderDetails = new RoomOrderDetailsDTO();
+            if (Id != null)
+            {
+                if (await localStorage.GetItemAsync<HomeVM>(SD.Local_InitialBooking) != null)
+                {
+
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            await jsRuntime.ToastrError(e.Message);
+        }
+    }
 }

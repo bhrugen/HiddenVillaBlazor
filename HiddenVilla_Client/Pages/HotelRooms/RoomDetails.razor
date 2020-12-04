@@ -1,7 +1,7 @@
 ﻿@page "/hotel/room-details/{Id:int}"
 @inject IJSRuntime jsRuntime
 @inject ILocalStorageService localStorage
-
+@inject IHotelRoomService hotelRoomService
 <div class="mt-4 mx-4 px-0 px-md-5 mx-md-5">
 
     <div class="row p-2 my-3 " style="border-radius:20px; ">
@@ -116,7 +116,26 @@
             {
                 if (await localStorage.GetItemAsync<HomeVM>(SD.Local_InitialBooking) != null)
                 {
-
+                    var roomInitialInfo = await localStorage.GetItemAsync<HomeVM>(SD.Local_InitialBooking);
+                    HotelBooking.OrderDetails.HotelRoomDTO = await hotelRoomService.GetHotelRoomDetails(Id.Value,
+                        roomInitialInfo.StartDate.ToString("MM/dd/yyyy"), roomInitialInfo.EndDate.ToString("MM/dd/yyyy"));
+                    NoOfNights = roomInitialInfo.NoOfNights;
+                    HotelBooking.OrderDetails.CheckInDate = roomInitialInfo.StartDate;
+                    HotelBooking.OrderDetails.CheckOutDate = roomInitialInfo.EndDate;
+                    HotelBooking.OrderDetails.HotelRoomDTO.TotalDays = roomInitialInfo.NoOfNights;
+                    HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount =
+                        roomInitialInfo.NoOfNights * HotelBooking.OrderDetails.HotelRoomDTO.RegularRate;
+                }
+                else
+                {
+                    HotelBooking.OrderDetails.HotelRoomDTO = await hotelRoomService.GetHotelRoomDetails(Id.Value,
+                      DateTime.Now.ToString("MM/dd/yyyy"), DateTime.Now.AddDays(1).ToString("MM/dd/yyyy"));
+                    NoOfNights = 1;
+                    HotelBooking.OrderDetails.CheckInDate = DateTime.Now;
+                    HotelBooking.OrderDetails.CheckOutDate = DateTime.Now.AddDays(1);
+                    HotelBooking.OrderDetails.HotelRoomDTO.TotalDays = 1;
+                    HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount =
+                         HotelBooking.OrderDetails.HotelRoomDTO.RegularRate;
                 }
             }
         }

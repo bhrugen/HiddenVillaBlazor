@@ -163,4 +163,22 @@ else
             await jsRuntime.ToastrError(e.Message);
         }
     }
+
+
+    private async Task HandleNoOfNightsChange(ChangeEventArgs e)
+    {
+        NoOfNights = Convert.ToInt32(e.Value.ToString());
+        HotelBooking.OrderDetails.HotelRoomDTO = await hotelRoomService.GetHotelRoomDetails(Id.Value,
+            HotelBooking.OrderDetails.CheckInDate.ToString("MM/dd/yyyy"),
+            HotelBooking.OrderDetails.CheckInDate.AddDays(NoOfNights).ToString("MM/dd/yyyy"));
+
+        HotelBooking.OrderDetails.CheckOutDate = HotelBooking.OrderDetails.CheckInDate.AddDays(NoOfNights);
+        HotelBooking.OrderDetails.HotelRoomDTO.TotalDays = NoOfNights;
+        HotelBooking.OrderDetails.HotelRoomDTO.TotalAmount = NoOfNights * HotelBooking.OrderDetails.HotelRoomDTO.RegularRate;
+    }
+
+    private async Task HandleCheckout()
+    {
+
+    }
 }

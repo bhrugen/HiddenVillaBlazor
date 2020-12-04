@@ -2,6 +2,7 @@
 using Business.Repository.IRepository;
 using Common;
 using DataAcesss.Data;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -39,14 +40,39 @@ namespace Business.Repository
             }
         }
 
-        public Task<IEnumerable<RoomOrderDetailsDTO>> GetAllRoomOrderDetails()
+        public async Task<IEnumerable<RoomOrderDetailsDTO>> GetAllRoomOrderDetails()
         {
-            throw new NotImplementedException();
+            try
+            {
+                IEnumerable<RoomOrderDetailsDTO> roomOrders = _mapper.Map<IEnumerable<RoomOrderDetails>, IEnumerable<RoomOrderDetailsDTO>>
+                    (_db.RoomOrderDetails.Include(u => u.HotelRoom));
+
+                return roomOrders;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
-        public Task<RoomOrderDetailsDTO> GetRoomOrderDetail(int roomOrderId)
+        public async Task<RoomOrderDetailsDTO> GetRoomOrderDetail(int roomOrderId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                RoomOrderDetails roomOrder = await _db.RoomOrderDetails
+                    .Include(u => u.HotelRoom).ThenInclude(x => x.HotelRoomImages)
+                    .FirstOrDefaultAsync(u => u.Id == roomOrderId);
+
+                RoomOrderDetailsDTO roomOrderDetailsDTO = _mapper.Map<RoomOrderDetails, RoomOrderDetailsDTO>(roomOrder);
+                roomOrderDetailsDTO.HotelRoomDTO.TotalDays = roomOrderDetailsDTO.CheckOutDate
+                    .Subtract(roomOrderDetailsDTO.CheckInDate).Days;
+
+                return roomOrderDetailsDTO;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public Task<bool> IsRoomBooked(int RoomId, DateTime checkInDate, DateTime checkOutDate)

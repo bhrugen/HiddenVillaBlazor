@@ -75,9 +75,21 @@ namespace Business.Repository
             }
         }
 
-        public Task<bool> IsRoomBooked(int RoomId, DateTime checkInDate, DateTime checkOutDate)
+        public async Task<bool> IsRoomBooked(int RoomId, DateTime checkInDate, DateTime checkOutDate)
         {
-            throw new NotImplementedException();
+            var status = false;
+            var existingBooking = await _db.RoomOrderDetails.Where(x => x.RoomId == RoomId && x.IsPaymentSuccessful &&
+            //check if checkin date that user wants does not fall in between any dates for room that is booked
+            (checkInDate < x.CheckOutDate && checkInDate.Date > x.CheckInDate
+            //check if checkout date that user wants does not fall in between any dates for room that is booked
+            || checkOutDate.Date > x.CheckInDate.Date && checkInDate.Date < x.CheckInDate.Date
+            )).FirstOrDefaultAsync();
+
+            if (existingBooking != null)
+            {
+                status = true;
+            }
+            return status;
         }
 
         public Task<RoomOrderDetailsDTO> MarkPaymentSuccessful(int id)

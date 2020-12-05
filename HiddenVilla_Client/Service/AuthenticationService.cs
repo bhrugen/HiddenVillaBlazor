@@ -36,6 +36,7 @@ namespace HiddenVilla_Client.Service
             {
                 await _localStorage.SetItemAsync(SD.Local_Token, result.Token);
                 await _localStorage.SetItemAsync(SD.Local_UserDetails, result.userDTO);
+
                 _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Token);
                 return new AuthenticationResponseDTO { IsAuthSuccessful = true };
             }

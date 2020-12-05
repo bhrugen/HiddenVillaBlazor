@@ -1,0 +1,5 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="/" Path="C:\Users\bhrug\OneDrive\Desktop\Udemy Course Code\Lecture Code\HiddenVilla\HiddenVilla\HiddenVilla_Server\obj\Release\net5.0\scopedcss\bundle\" />
+  <ContentRoot BasePath="/Identity" Path="C:\Users\bhrug\.nuget\packages\microsoft.aspnetcore.identity.ui\5.0.0\staticwebassets\V4\" />
+  <ContentRoot BasePath="_content/Blazored.TextEditor" Path="C:\Users\bhrug\.nuget\packages\blazored.texteditor\1.0.3\build\..\staticwebassets\" />
+</StaticWebAssets>

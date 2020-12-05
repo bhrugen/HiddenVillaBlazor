@@ -1,0 +1,21 @@
+﻿@page "/success-payment"
+@inject ILocalStorageService localStorage
+@inject IRoomOrderDetailsService roomOrderDetailService
+
+
+<div class="container">
+    <div class="row mt-4 pt-4">
+        <div class="col-10 offset-1 text-center">
+            <h2 class="text-warning">Booking Confirmed</h2>
+            <p>Your room has been booked successfully with order id @OrderId</p>
+        </div>
+        <div class="col-8 offset-2">
+            <img src="/images/confirmation.jpg" width="100%" style="border-radius:30px;" />
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool IsPaymentComplete { get; set; } = false;
+    private int OrderId { get; set; }
+}

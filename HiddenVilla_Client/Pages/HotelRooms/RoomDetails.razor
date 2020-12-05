@@ -168,6 +168,15 @@ else
                          HotelBooking.OrderDetails.HotelRoomDTO.RegularRate;
                 }
             }
+
+            if (await localStorage.GetItemAsync<UserDTO>(SD.Local_UserDetails) != null)
+            {
+                var userInfo = await localStorage.GetItemAsync<UserDTO>(SD.Local_UserDetails);
+                HotelBooking.OrderDetails.UserId = userInfo.Id;
+                HotelBooking.OrderDetails.Name = userInfo.Name;
+                HotelBooking.OrderDetails.Email = userInfo.Email;
+                HotelBooking.OrderDetails.Phone = userInfo.PhoneNo;
+            }
         }
         catch (Exception e)
         {

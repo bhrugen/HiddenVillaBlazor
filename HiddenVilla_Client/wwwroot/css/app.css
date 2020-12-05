@@ -9,6 +9,48 @@ a {
 }
 
 
+.spinner {
+    border: 16px solid silver !important;
+    border-top: 16px solid #337AB7 !important;
+    border-radius: 50% !important;
+    width: 80px !important;
+    height: 80px !important;
+    animation: spin 700ms linear infinite !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    position: absolute !important;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+.room-image {
+    display: block;
+    width: 100%;
+    height: 150px;
+    background-size: cover !important;
+    border: 3px solid green;
+    position: relative;
+}
+
+.room-image-title {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: green;
+    color: white;
+    padding: 0px 6px;
+    display: inline-block
+}
+
 .content {
     padding-top: 1.1rem;
 }

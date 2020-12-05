@@ -1,5 +1,8 @@
 ﻿@page "/registration"
 
+@inject IAuthenticationService authenticationService
+@inject NavigationManager navigationManager
+
 <EditForm Model="UserForRegisteration" OnValidSubmit="RegisterUser" class="pt-4">
     <DataAnnotationsValidator />
     <div class="py-4">
@@ -24,12 +27,12 @@
                         <hr style="background-color:aliceblue" />
                         <div class="py-2">
                             <InputText @bind-Value="UserForRegisteration.Name" class="form-control" placeholder="Name..." />
-                            <ValidationMessage For="(()=>UserForRegisteration.Name" />
+                            <ValidationMessage For="(()=>UserForRegisteration.Name)" />
 
                         </div>
                         <div class="py-2">
                             <InputText @bind-Value="UserForRegisteration.Email" class="form-control" placeholder="Email..." />
-                            <ValidationMessage For="(()=>UserForRegisteration.Email" />
+                            <ValidationMessage For="(()=>UserForRegisteration.Email)" />
 
                         </div>
                         <div class="py-2 input-group">
@@ -37,17 +40,17 @@
                                 <span class="input-group-text"> +1</span>
                             </div>
                             <InputText @bind-Value="UserForRegisteration.PhoneNo" class="form-control" placeholder="Phone number..." />
-                            <ValidationMessage For="(()=>UserForRegisteration.PhoneNo" />
+                            <ValidationMessage For="(()=>UserForRegisteration.PhoneNo)" />
 
                         </div>
                         <div class="form-row py-2">
                             <div class="col">
                                 <InputText @bind-Value="UserForRegisteration.Password" type="password" id="password" placeholder="Password..." class="form-control" />
-                                <ValidationMessage For="(()=>UserForRegisteration.Password" />
+                                <ValidationMessage For="(()=>UserForRegisteration.Password)" />
                             </div>
                             <div class="col">
                                 <InputText @bind-Value="UserForRegisteration.ConfirmPassword" type="password" id="confirm" class="form-control" placeholder="Confirm Password..." />
-                                <ValidationMessage For="(()=>UserForRegisteration.ConfirmPassword" />
+                                <ValidationMessage For="(()=>UserForRegisteration.ConfirmPassword)" />
                             </div>
 
                         </div>
@@ -83,7 +86,20 @@
 
     private async Task RegisterUser()
     {
-
+        ShowRegistrationErrors = false;
+        IsProcessing = true;
+        var result = await authenticationService.RegisterUser(UserForRegisteration);
+        if (result.IsRegisterationSuccessful)
+        {
+            IsProcessing = false;
+            navigationManager.NavigateTo("/login");
+        }
+        else
+        {
+            IsProcessing = false;
+            Errors = result.Errors;
+            ShowRegistrationErrors = true;
+        }
     }
 
 }

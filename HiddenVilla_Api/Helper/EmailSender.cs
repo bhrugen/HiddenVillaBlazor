@@ -21,8 +21,8 @@ namespace HiddenVilla_Api.Helper
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            MailjetClient client = new MailjetClient(Environment.GetEnvironmentVariable(_mailJetSettings.PublicKey),
-                Environment.GetEnvironmentVariable(_mailJetSettings.PrivateKey))
+            MailjetClient client = new MailjetClient(_mailJetSettings.PublicKey,
+                _mailJetSettings.PrivateKey)
             {
                 Version = ApiVersion.V3_1,
             };
@@ -47,6 +47,9 @@ namespace HiddenVilla_Api.Helper
                  }
                    });
             MailjetResponse response = await client.PostAsync(request);
+
         }
+
+
     }
 }

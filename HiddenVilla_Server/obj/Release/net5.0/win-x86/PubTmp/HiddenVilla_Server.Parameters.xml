@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="IIS Web Application Name" description="" value="HiddenVillaServer" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\bhrug\\OneDrive\\Desktop\\Udemy\ Course\ Code\\Lecture\ Code\\HiddenVilla\\HiddenVilla\\HiddenVilla_Server\\obj\\Release\\net5\.0\\win-x86\\PubTmp\\Out\\$" />
-  </parameter>
-</parameters>

@@ -4,15 +4,10 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-a, .btn-link {
+a {
     color: #0366d6;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
 
 .content {
     padding-top: 1.1rem;
@@ -52,80 +47,96 @@ a, .btn-link {
 
 
 
-
-@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
-
-
-.valid.modified:not([type=checkbox]) {
-    outline: 1px solid #26b050;
+#logreg-forms {
+    width: 412px;
+    margin: 10vh auto;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
-.invalid {
-    outline: 1px solid red;
-}
-
-.validation-message {
-    color: red;
-}
-
-#blazor-error-ui {
-    background: lightyellow;
-    bottom: 0;
-    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
-    display: none;
-    left: 0;
-    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-}
-
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
+    #logreg-forms form {
+        width: 100%;
+        max-width: 410px;
+        padding: 15px;
+        margin: auto;
     }
 
-
-.spinner {
-    border: 16px solid silver !important;
-    border-top: 16px solid #337AB7 !important;
-    border-radius: 50% !important;
-    width: 80px !important;
-    height: 80px !important;
-    animation: spin 700ms linear infinite !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%);
-    position: absolute !important;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg)
+    #logreg-forms .form-control {
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 10px;
+        font-size: 16px;
     }
 
-    100% {
-        transform: rotate(360deg)
+        #logreg-forms .form-control:focus {
+            z-index: 2;
+        }
+
+    #logreg-forms .form-signin input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
     }
+
+    #logreg-forms .form-signin input[type="password"] {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    #logreg-forms .social-login {
+        width: 390px;
+        margin: 0 auto;
+        margin-bottom: 14px;
+    }
+
+    #logreg-forms .social-btn {
+        font-weight: 100;
+        color: white;
+        width: 190px;
+        font-size: 0.9rem;
+    }
+
+    #logreg-forms a {
+        display: block;
+        padding-top: 10px;
+        color: lightseagreen;
+    }
+
+#logreg-form .lines {
+    width: 200px;
+    border: 1px solid red;
 }
 
-.room-image {
-    display: block;
-    width: 100%;
-    height: 150px;
-    background-size: cover !important;
-    border: 3px solid green;
-    position: relative;
+
+#logreg-forms button[type="submit"] {
+    margin-top: 10px;
 }
 
-.room-image-title {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: green;
+.facebook-btn {
+    background-color: #3C589C;
     color: white;
-    padding: 0px 6px;
-    display: inline-block
+}
+
+.google-btn {
+    background-color: #dd4b39;
+    color: white;
+}
+
+#logreg-forms .form-reset, #logreg-forms .form-signup {
+    display: none;
+}
+
+    #logreg-forms .form-signup .social-btn {
+        width: 210px;
+    }
+
+    #logreg-forms .form-signup input {
+        margin-bottom: 2px;
+    }
+
+.form-signup .social-login {
+    width: 210px !important;
+    margin: 0 auto;
 }

@@ -1,0 +1,25 @@
+﻿@page "/login"
+
+    <div id="logreg-forms" class="bg-dark border">
+
+        <form id="external-account" asp-page="./ExternalLogin" method="post" class="form-horizontal">
+            <h1 class="h3 mb-3 font-weight-normal text-primary" style="text-align:center;">Sign In</h1>
+            <div class="social-login pb-0 mb-0">
+
+            </div>
+
+        </form>
+        <form>
+            <input id="email" placeholder="Email..." class="form-control mb-2" />
+            <input type="password" placeholder="Password..." id="password" class="form-control mb-2" />
+
+            <button type="submit" class="btn btn-success btn-block"><i class="fas fa-sign-in-alt"></i> Sign in</button>
+
+            <a href="/registration"
+               class="btn btn-primary text-white mt-3"><i class="fas fa-user-plus"></i> Register as a new user</a>
+        </form>
+
+    </div>
+    @code {
+
+    }

@@ -1,6 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Common;
 using HiddenVilla_Client.Service.IService;
+using Microsoft.AspNetCore.Components.Authorization;
 using Models;
 using Newtonsoft.Json;
 using System;
@@ -17,10 +18,13 @@ namespace HiddenVilla_Client.Service
     {
         private readonly HttpClient _client;
         private readonly ILocalStorageService _localStorage;
+        private readonly AuthenticationStateProvider _authStateProvider;
 
-        public AuthenticationService(HttpClient client, ILocalStorageService localStorage)
+        public AuthenticationService(HttpClient client, ILocalStorageService localStorage, AuthenticationStateProvider authStateProvider)
         {
             _client = client;
+            _authStateProvider = authStateProvider;
+            ((AuthStateProvider)_authStateProvider).NotifyUserLogout();
             _localStorage = localStorage;
         }
 
@@ -36,7 +40,7 @@ namespace HiddenVilla_Client.Service
             {
                 await _localStorage.SetItemAsync(SD.Local_Token, result.Token);
                 await _localStorage.SetItemAsync(SD.Local_UserDetails, result.userDTO);
-
+                ((AuthStateProvider)_authStateProvider).NotifyUserLoggedIn(result.Token);
                 _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Token);
                 return new AuthenticationResponseDTO { IsAuthSuccessful = true };
             }

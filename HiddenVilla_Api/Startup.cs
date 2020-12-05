@@ -47,6 +47,8 @@ namespace HiddenVilla_Api
             var appSettingsSection = Configuration.GetSection("APISettings");
             services.Configure<APISettings>(appSettingsSection);
 
+            services.Configure<MailJetSettings>(Configuration.GetSection("MailJetSettings"));
+
             var apiSettings = appSettingsSection.Get<APISettings>();
             var key = Encoding.ASCII.GetBytes(apiSettings.SecretKey);
 

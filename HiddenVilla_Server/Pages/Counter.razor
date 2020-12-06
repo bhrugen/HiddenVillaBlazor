@@ -1,4 +1,7 @@
 ﻿@page "/counter"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage localStorage
+@inject ProtectedSessionStorage sessionStorage
 
 <h1>Counter</h1>
 
@@ -9,8 +12,10 @@
 @code {
     private int currentCount = 0;
 
-    private void IncrementCount()
+    private async Task IncrementCount()
     {
         currentCount++;
+        await localStorage.SetAsync("counterLocal", currentCount);
+        await sessionStorage.SetAsync("counterSession", currentCount);
     }
 }

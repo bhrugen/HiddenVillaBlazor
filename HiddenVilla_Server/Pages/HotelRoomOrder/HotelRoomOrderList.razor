@@ -1,5 +1,54 @@
-﻿<h3>HotelRoomOrderList</h3>
+﻿@page "/hotel-room-order"
+@using Business.Repository.IRepository
+@using Models
+@using Radzen
+@inject IRoomOrderDetailsRepository roomOrderDetailReposiory
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigationManager
+
+
+@if (!IsLoading)
+{
+    <h4 class="card-title text-info">Hotel Room Order's</h4>
+    <RadzenGrid AllowFiltering="true"
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                FilterMode="FilterMode.Advanced" AllowPaging="true" PageSize="4"
+                AllowSorting="true" Data="@HotelRoomOrders" TItem="RoomOrderDetailsDTO" ColumnWidth="200px">
+        <Columns>
+            <RadzenGridColumn TItem="RoomOrderDetailsDTO" Property="Name" Title="Customer Name" />
+            <RadzenGridColumn TItem="RoomOrderDetailsDTO" Property="Phone" Title="Customer Name" />
+            <RadzenGridColumn TItem="RoomOrderDetailsDTO" Property="Email" Title="Customer Name" />
+            <RadzenGridColumn TItem="RoomOrderDetailsDTO" Property="HotelRoomDTO.Name" Title="Room" />
+            <RadzenGridColumn TItem="RoomOrderDetailsDTO" Property="Status" Title="Status" />
+            <RadzenGridColumn TItem="RoomOrderDetailsDTO" Property="CheckInDate" Title="Check in Date">
+                <Template Context="data">
+                    @String.Format("{0:d}", data.CheckInDate)
+                </Template>
+            </RadzenGridColumn>
+
+            <RadzenGridColumn TItem="RoomOrderDetailsDTO" Property="Id" Title="">
+                <Template Context="data">
+                    <NavLink class="btn btn-primary" href="@($"hotel-room-order/details/{data.Id}")">Edit</NavLink>
+                </Template>
+            </RadzenGridColumn>
+        </Columns>
+    </RadzenGrid>
+}
+else
+{
+    <p>loading...</p>
+}
+
+
 
 @code {
+    private IEnumerable<RoomOrderDetailsDTO> HotelRoomOrders { get; set; } = new List<RoomOrderDetailsDTO>();
+    private bool IsLoading { get; set; } = false;
 
+    protected override async Task OnInitializedAsync()
+    {
+        IsLoading = true;
+        HotelRoomOrders = await roomOrderDetailReposiory.GetAllRoomOrderDetails();
+        IsLoading = false;
+    }
 }

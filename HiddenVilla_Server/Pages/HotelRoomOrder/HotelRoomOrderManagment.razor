@@ -84,7 +84,7 @@
                             <h4 class="text-warning font-weight-bold pt-5 float-right">
                                 USD
                                 <span style="border-bottom:1px solid #ff6a00">
-                                    @HotelBooking.HotelRoomDTO.TotalAmount.ToString("#,#.00#;(#,#.00#)")
+                                    @HotelBooking.TotalCost.ToString("#,#.00#;(#,#.00#)")
                                 </span>
                             </h4>
 
@@ -104,14 +104,14 @@
                     @if (HotelBooking.Status == SD.Status_Booked || HotelBooking.Status == SD.Status_Pending)
                     {
                         <div class="col-3">
-                            <button class="btn btn-danger form-control">Cancel Booking </button>
+                            <button @onclick="CancelBooking" class="btn btn-danger form-control">Cancel Booking </button>
                         </div>
                     }
 
                     @if (HotelBooking.Status == SD.Status_Booked)
                     {
                         <div class="col-3 offset-1">
-                            <button class="btn btn-warning form-control">No Show </button>
+                            <button @onclick="NoShowBooking" class="btn btn-warning form-control">No Show </button>
                         </div>
                     }
                 </div>
@@ -121,19 +121,19 @@
                 <div class="row px-2 text-success border-bottom"><div class="col-7 py-1"><p style="font-size:x-large;margin:0px;">Enter Details</p></div></div>
                 <div class="form-group pt-2">
                     <label class="text-warning">Booking Status</label>
-                    <InputText @bind-Value="HotelBooking.Status" type="text" disabled class="form-control" />
+                    <input @bind-value="HotelBooking.Status" type="text" disabled class="form-control" />
                 </div>
                 <div class="form-group pt-2">
                     <label class="text-warning">Name</label>
-                    <InputText @bind-Value="HotelBooking.Name" type="text" disabled class="form-control" />
+                    <input @bind-value="HotelBooking.Name" type="text" disabled class="form-control" />
                 </div>
                 <div class="form-group pt-2">
                     <label class="text-warning">Phone</label>
-                    <InputText @bind-Value="HotelBooking.Phone" type="text" disabled class="form-control" />
+                    <input @bind-value="HotelBooking.Phone" type="text" disabled class="form-control" />
                 </div>
                 <div class="form-group">
                     <label class="text-warning">Email</label>
-                    <InputText @bind-Value="HotelBooking.Email" type="text" disabled class="form-control" />
+                    <input @bind-value="HotelBooking.Email" type="text" disabled class="form-control" />
                 </div>
                 <div class="form-group">
                     <label class="text-warning">Check in Date</label>
@@ -162,12 +162,12 @@
 
                     @if (HotelBooking.Status == SD.Status_Booked)
                     {
-                        <button class="btn btn-success">Confirm Check In</button>
+                        <button @onclick="ConfirmCheckIn" class="btn btn-success">Confirm Check In</button>
                     }
 
                     @if (HotelBooking.Status == SD.Status_CheckedIn)
                     {
-                        <button class="btn btn-success">Confirm Check Out </button>
+                        <button @onclick="ConfirmCheckOut" class="btn btn-success">Confirm Check Out </button>
                     }
                 </div>
             </div>

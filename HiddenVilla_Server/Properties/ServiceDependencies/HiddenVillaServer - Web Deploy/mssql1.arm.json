@@ -51,7 +51,7 @@
             {
               "kind": "v12.0",
               "location": "[parameters('resourceLocation')]",
-              "name": "hiddenvilla-serverdbserver",
+              "name": "hiddenvilla-serverdb",
               "type": "Microsoft.Sql/servers",
               "apiVersion": "2017-10-01-preview"
             },
@@ -63,11 +63,11 @@
               },
               "kind": "v12.0,user",
               "location": "[parameters('resourceLocation')]",
-              "name": "hiddenvilla-serverdbserver/HiddenVilla_Server_db",
+              "name": "hiddenvilla-serverdb/HiddenVilla_Server_db",
               "type": "Microsoft.Sql/servers/databases",
               "apiVersion": "2017-10-01-preview",
               "dependsOn": [
-                "hiddenvilla-serverdbserver"
+                "hiddenvilla-serverdb"
               ]
             }
           ]

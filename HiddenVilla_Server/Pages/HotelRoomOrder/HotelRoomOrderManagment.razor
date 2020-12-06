@@ -1,5 +1,8 @@
 ﻿@page "/hotel-room-order/details/{Id:int}"
-
+@using Models
+@using Business.Repository.IRepository
+@inject IRoomOrderDetailsRepository roomOrderDetailsRepository
+@using Common
 <div class="mt-4 px-md-1 mx-md-1">
 
     <div class="row p-2 my-3 bg-dark" style="border-radius:20px; ">
@@ -134,4 +137,47 @@
 @code {
     [Parameter]
     public int Id { get; set; }
+
+    private RoomOrderDetailsDTO HotelBooking { get; set; } = new RoomOrderDetailsDTO() { HotelRoomDTO = new HotelRoomDTO() };
+    private bool IsLoading { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsLoading = true;
+
+        if (Id != 0)
+        {
+            HotelBooking = await roomOrderDetailsRepository.GetRoomOrderDetail(Id);
+        }
+        else
+        {
+            //error
+        }
+
+        IsLoading = false;
+    }
+
+    private async Task ConfirmCheckIn()
+    {
+        await roomOrderDetailsRepository.UpdateOrderStatus(HotelBooking.Id, SD.Status_CheckedIn);
+        HotelBooking = await roomOrderDetailsRepository.GetRoomOrderDetail(Id);
+    }
+
+    private async Task ConfirmCheckOut()
+    {
+        await roomOrderDetailsRepository.UpdateOrderStatus(HotelBooking.Id, SD.Status_CheckedOut_Completed);
+        HotelBooking = await roomOrderDetailsRepository.GetRoomOrderDetail(Id);
+    }
+
+    private async Task CancelBooking()
+    {
+        await roomOrderDetailsRepository.UpdateOrderStatus(HotelBooking.Id, SD.Status_Cancelled);
+        HotelBooking = await roomOrderDetailsRepository.GetRoomOrderDetail(Id);
+    }
+
+    private async Task NoShowBooking()
+    {
+        await roomOrderDetailsRepository.UpdateOrderStatus(HotelBooking.Id, SD.Status_NoShow);
+        HotelBooking = await roomOrderDetailsRepository.GetRoomOrderDetail(Id);
+    }
 }

@@ -1,0 +1,83 @@
+﻿@page "/lifecycle"
+@using System.Threading
+
+<h3>Lifecycle</h3>
+
+<div class="border">
+    <LifecycleComponent CountValue="@currentCount"></LifecycleComponent>
+</div>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<br /> @Count <button @onclick=StartCountdown>Start Countdown</button>
+<hr />
+@foreach (var item in EventType)
+{
+    @item
+    <hr />
+}
+
+
+@code
+{
+    private int currentCount = 0;
+    List<string> EventType = new List<string>();
+    private int Count { get; set; } = 5;
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    protected override void OnInitialized()
+    {
+        EventType.Add("OnInitialized is called");
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        EventType.Add("OnInitializedAsync is called");
+    }
+    protected override void OnParametersSet()
+    {
+        EventType.Add("OnParameterSet is called");
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        EventType.Add("OnParametersSetAsync is called");
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            currentCount = 111;
+        }
+        else
+        {
+            currentCount = 999;
+        }
+        EventType.Add("OnAfterRender is called");
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        EventType.Add("OnAfterRenderAsync is called");
+    }
+
+    protected override bool ShouldRender()
+    {
+        EventType.Add("ShouldRender is called");
+        return true;
+    }
+    void StartCountdown()
+    {
+        var timer = new Timer(TimeCallBack, null, 1000, 1000);
+    }
+
+    void TimeCallBack(object state)
+    {
+        if (Count > 0)
+        {
+            Count--;
+            InvokeAsync(StateHasChanged);
+        }
+    }
+}

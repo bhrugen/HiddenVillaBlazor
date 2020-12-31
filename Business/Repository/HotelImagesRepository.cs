@@ -32,6 +32,10 @@ namespace Business.Repository
         {
             var allImages = await _db.HotelRoomImages.FirstOrDefaultAsync
                                 (x => x.RoomImageUrl.ToLower() == imageUrl.ToLower());
+            if (allImages == null)
+            {
+                return 0;
+            }
             _db.HotelRoomImages.Remove(allImages);
             return await _db.SaveChangesAsync();
 

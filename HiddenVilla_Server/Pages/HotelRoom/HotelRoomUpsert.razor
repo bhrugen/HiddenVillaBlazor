@@ -193,7 +193,7 @@
                 HotelRoomModel.Details = await QuillHtml.GetHTML();
                 //update
                 var updateRoomResult = await HotelRoomRepository.UpdateHotelRoom(HotelRoomModel.Id, HotelRoomModel);
-                if (HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Any())
+                if ((HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Any()) || (DeletedImageNames != null && DeletedImageNames.Any()))
                 {
                     if (DeletedImageNames != null && DeletedImageNames.Any())
                     {
